@@ -1,1 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mane — Recurring Revenue for Barbers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  :root {
+    --ink:       #0f0e0d;
+    --paper:     #f7f4ef;
+    --paper-2:   #edeae3;
+    --paper-3:   #e2ddd4;
+    --gold:      #c9922a;
+    --gold-lt:   #f5e8cc;
+    --teal:      #1d6b5a;
+    --teal-lt:   #d0ece7;
+    --muted:     #6e6b66;
+    --serif:     'DM Serif Display', Georgia, serif;
+    --sans:      'DM Sans', system-ui, sans-serif;
+    --max:       1100px;
+    --r:         6px;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); background: var(--paper); color: var(--ink); line-height: 1.6; overflow-x: hidden; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 2.5rem;
+    background: rgba(247,244,239,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--paper-2);
+  }
+  .logo { font-family: var(--serif); font-size: 1.4rem; display: flex; align-items: center; gap: 0.5rem; color: var(--ink); text-decoration: none; }
+  .logo-mark { width: 30px; height: 30px; background: var(--ink); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--paper); font-size: 0.9rem; }
+  .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.875rem; color: var(--muted); text-decoration: none; transition: color .2s; }
+  .nav-links a:hover { color: var(--ink); }
+  .btn-nav { font-size: 0.875rem; font-weight: 500; padding: .55rem 1.3rem; background: var(--ink); color: var(--paper) !important; border-radius: var(--r); transition: opacity .2s; }
+  .btn-nav:hover { opacity: .85; }
+
+  /* ── SECTIONS ── */
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 2.5rem; }
+  section { padding: 5.5rem 0; }
+  .eyebrow { font-size: .7rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin-bottom: .6rem; }
+  h2 { font-family: var(--serif); font-size: clamp(2rem,3.5vw,2.8rem); line-height: 1.1; letter-spacing: -.02em; margin-bottom: 1rem; }
+  h2 em { font-style: italic; color: var(--gold); }
+  .sub { font-size: 1rem; color: var(--muted); max-width: 480px; line-height: 1.7; }
+  hr.div { border: none; border-top: 1px solid var(--paper-2); max-width: var(--max); margin: 0 auto; }
+
+  /* ── HERO ── */
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 4rem; padding-top: 5rem; }
+
+  .hero-badge { display: inline-flex; align-items: center; gap: .4rem; font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); background: var(--teal-lt); padding: .3rem .8rem; border-radius: 2px; margin-bottom: 1.25rem; }
+  .hero-badge::before { content:''; width:6px; height:6px; border-radius:50%; background: var(--teal); }
+
+  h1 { font-family: var(--serif); font-size: clamp(2.8rem,5vw,4.2rem); line-height: 1.05; letter-spacing: -.03em; margin-bottom: 1.25rem; }
+  h1 em { font-style: italic; color: var(--gold); }
+
+  .hero-sub { font-size: 1.05rem; color: var(--muted); max-width: 420px; line-height: 1.75; margin-bottom: 2.5rem; }
+
+  .cta-row { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
+  .btn-primary { display: inline-flex; align-items: center; gap: .4rem; font-size: .9rem; font-weight: 500; padding: .9rem 1.8rem; background: var(--ink); color: var(--paper); border-radius: var(--r); text-decoration: none; transition: transform .15s, opacity .2s; }
+  .btn-primary:hover { transform: translateY(-1px); opacity: .9; }
+  .btn-ghost { font-size: .875rem; color: var(--muted); text-decoration: none; transition: color .2s; }
+  .btn-ghost:hover { color: var(--ink); }
+
+  .hero-proof { display: flex; align-items: center; gap: .5rem; font-size: .78rem; color: var(--muted); }
+  .hero-proof::before { content:'✓'; color: var(--teal); font-weight: 600; }
+
+  /* ── PHONE MOCKUP ── */
+  .hero-visual { display: flex; justify-content: center; align-items: center; position: relative; }
+
+  .phone-scene {
+    position: relative;
+    width: 340px;
+  }
+
+  /* Glow behind phone */
+  .phone-scene::before {
+    content: '';
+    position: absolute;
+    inset: -40px;
+    background: radial-gradient(ellipse at center, rgba(201,146,42,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .phone {
+    width: 260px;
+    margin: 0 auto;
+    display: block;
+    background: #1a1917;
+    border-radius: 36px;
+    padding: 12px;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.08),
+      0 30px 80px rgba(0,0,0,0.35),
+      0 10px 30px rgba(0,0,0,0.2);
+    animation: float 5s ease-in-out infinite;
+    position: relative;
+    z-index: 2;
+  }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0) rotate(-1deg); }
+    50%      { transform: translateY(-10px) rotate(-1deg); }
+  }
+
+  .phone-notch {
+    width: 80px; height: 26px;
+    background: #1a1917;
+    border-radius: 0 0 16px 16px;
+    margin: 0 auto 6px;
+    position: relative;
+    z-index: 3;
+  }
+
+  .phone-screen {
+    background: #f7f4ef;
+    border-radius: 26px;
+    overflow: hidden;
+    min-height: 480px;
+  }
+
+  /* Screen content */
+  .screen-header {
+    background: #0f0e0d;
+    padding: 14px 16px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .screen-logo { font-family: var(--serif); font-size: .85rem; color: #f7f4ef; display: flex; align-items: center; gap: .3rem; }
+  .screen-logo-dot { width: 14px; height: 14px; background: var(--gold); border-radius: 50%; }
+  .screen-date { font-size: .6rem; color: rgba(255,255,255,.4); }
+
+  .screen-body { padding: 12px; }
+
+  .screen-greeting { font-size: .65rem; color: var(--muted); margin-bottom: 2px; }
+  .screen-shop { font-family: var(--serif); font-size: .95rem; color: var(--ink); margin-bottom: 10px; }
+
+  .screen-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px; }
+  .screen-stat { background: #fff; border-radius: 8px; padding: 8px 10px; border: 1px solid var(--paper-2); }
+  .screen-stat-label { font-size: .52rem; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: 2px; }
+  .screen-stat-val { font-family: var(--serif); font-size: 1.3rem; line-height: 1; color: var(--ink); }
+  .screen-stat-delta { font-size: .5rem; color: var(--teal); margin-top: 1px; }
+
+  .screen-section-label { font-size: .55rem; text-transform: uppercase; letter-spacing: .09em; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
+
+  .screen-checkins { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
+  .screen-checkin { display: flex; align-items: center; gap: 7px; background: #fff; border-radius: 7px; padding: 7px 9px; border: 1px solid var(--paper-2); }
+  .screen-av { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .5rem; font-weight: 600; flex-shrink: 0; }
+  .av-a { background: var(--teal-lt); color: var(--teal); }
+  .av-b { background: var(--gold-lt); color: var(--gold); }
+  .av-c { background: #e8e2f5; color: #6b4ec8; }
+  .screen-checkin-name { font-size: .65rem; font-weight: 500; flex: 1; }
+  .screen-checkin-time { font-size: .55rem; color: var(--muted); }
+  .screen-tick { font-size: .6rem; color: var(--teal); }
+
+  .screen-mrr-bar { background: #fff; border-radius: 8px; padding: 8px 10px; border: 1px solid var(--paper-2); }
+  .screen-mrr-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
+  .screen-mrr-label { font-size: .55rem; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+  .screen-mrr-val { font-family: var(--serif); font-size: .85rem; color: var(--ink); }
+  .screen-bar-bg { height: 5px; background: var(--paper-2); border-radius: 3px; overflow: hidden; }
+  .screen-bar-fill { height: 100%; background: linear-gradient(90deg, var(--teal), #4db89e); border-radius: 3px; animation: grow 2s ease-out forwards; }
+  @keyframes grow { from { width: 0; } to { width: 67%; } }
+
+  /* Floating badge */
+  .badge-float {
+    position: absolute;
+    right: -10px;
+    top: 60px;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 10px;
+    padding: .7rem 1rem;
+    width: 150px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    animation: float2 5s ease-in-out infinite 1.2s;
+    z-index: 5;
+  }
+  @keyframes float2 {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+  }
+  .badge-float-label { font-size: .55rem; text-transform: uppercase; letter-spacing: .09em; color: var(--gold-lt); margin-bottom: 2px; }
+  .badge-float-val { font-family: var(--serif); font-size: 1.4rem; color: var(--paper); line-height: 1; }
+  .badge-float-sub { font-size: .6rem; color: rgba(255,255,255,.45); margin-top: 2px; }
+
+  .badge-float-2 {
+    position: absolute;
+    left: -15px;
+    bottom: 80px;
+    background: var(--teal);
+    color: #fff;
+    border-radius: 10px;
+    padding: .6rem .9rem;
+    width: 130px;
+    box-shadow: 0 8px 24px rgba(29,107,90,.35);
+    animation: float2 5s ease-in-out infinite 2.5s;
+    z-index: 5;
+  }
+  .badge-float-2 .badge-float-label { color: rgba(255,255,255,.6); }
+  .badge-float-2 .badge-float-val { font-family: var(--serif); font-size: 1.2rem; color: #fff; line-height: 1; }
+  .badge-float-2 .badge-float-sub { color: rgba(255,255,255,.5); }
+
+  /* ── HOW IT WORKS ── */
+  .how-section { background: var(--ink); color: var(--paper); padding: 5.5rem 0; }
+  .how-section .eyebrow { color: var(--gold); }
+  .how-section h2 { color: var(--paper); }
+  .how-section .sub { color: rgba(255,255,255,.5); }
+
+  .steps-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(255,255,255,.08); border-radius: 10px; overflow: hidden; margin-top: 3rem; }
+  .step-card { background: #181816; padding: 2rem 1.5rem; position: relative; }
+  .step-num { font-family: var(--serif); font-size: 2.5rem; color: rgba(255,255,255,.07); line-height: 1; margin-bottom: .75rem; }
+  .step-icon { font-size: 1.5rem; margin-bottom: .75rem; }
+  .step-title { font-family: var(--serif); font-size: 1rem; color: var(--paper); margin-bottom: .5rem; }
+  .step-desc { font-size: .82rem; color: rgba(255,255,255,.45); line-height: 1.65; }
+  .step-card::after { content: '→'; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,.15); font-size: 1.2rem; z-index: 2; }
+  .step-card:last-child::after { display: none; }
+
+  /* ── FEATURES ── */
+  .feat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3.5rem; }
+  .feat-card { background: #fff; border: 1px solid var(--paper-2); border-radius: 10px; padding: 1.75rem; transition: box-shadow .2s, transform .2s; }
+  .feat-card:hover { box-shadow: 0 8px 32px rgba(15,14,13,.07); transform: translateY(-2px); }
+  .feat-icon { font-size: 1.4rem; margin-bottom: .75rem; }
+  .feat-title { font-family: var(--serif); font-size: 1.05rem; margin-bottom: .4rem; }
+  .feat-desc { font-size: .84rem; color: var(--muted); line-height: 1.65; }
+
+  /* ── PRICING ── */
+  .pricing-section { background: var(--paper-2); padding: 5.5rem 0; }
+  .pricing-note { display: inline-flex; align-items: center; gap: .4rem; font-size: .78rem; color: var(--muted); background: var(--paper-3); padding: .35rem .8rem; border-radius: var(--r); margin-bottom: .75rem; }
+
+  .pricing-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; max-width: 700px; }
+  .pricing-card { background: #fff; border: 1px solid var(--paper-3); border-radius: 10px; padding: 2rem; }
+  .pricing-card.featured { background: var(--ink); border-color: var(--ink); }
+  .pricing-card-label { font-size: .68rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: .75rem; }
+  .pricing-card.featured .pricing-card-label { color: var(--gold-lt); }
+  .pricing-amount { font-family: var(--serif); font-size: 2.4rem; line-height: 1; margin-bottom: .2rem; }
+  .pricing-card.featured .pricing-amount { color: var(--paper); }
+  .pricing-per { font-size: .78rem; color: var(--muted); margin-bottom: 1.25rem; }
+  .pricing-card.featured .pricing-per { color: rgba(255,255,255,.45); }
+  .pricing-desc { font-size: .84rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.25rem; }
+  .pricing-card.featured .pricing-desc { color: rgba(255,255,255,.5); }
+  .pricing-example { font-size: .78rem; background: var(--paper); border-radius: var(--r); padding: .65rem .85rem; line-height: 1.5; }
+  .pricing-card.featured .pricing-example { background: rgba(255,255,255,.07); color: var(--paper); }
+  .pricing-example strong { color: var(--teal); font-weight: 500; }
+  .pricing-card.featured .pricing-example strong { color: var(--gold-lt); }
+
+  .pricing-footnote { font-size: .75rem; color: var(--muted); margin-top: 1.25rem; max-width: 600px; }
+
+  /* ── SOCIAL PROOF ── */
+  .proof-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem; }
+  .proof-card { background: #fff; border: 1px solid var(--paper-2); border-radius: 8px; padding: 1.75rem; }
+  .proof-stars { font-size: .9rem; margin-bottom: .75rem; color: var(--gold); }
+  .proof-quote { font-family: var(--serif); font-size: 1rem; line-height: 1.55; color: var(--ink); margin-bottom: 1rem; }
+  .proof-quote::before { content:'\201C'; color: var(--gold); }
+  .proof-quote::after  { content:'\201D'; color: var(--gold); }
+  .proof-person { display: flex; align-items: center; gap: .6rem; }
+  .proof-av { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .7rem; font-weight: 600; }
+  .proof-name { font-size: .84rem; font-weight: 500; }
+  .proof-role { font-size: .72rem; color: var(--muted); }
+
+  /* ── CTA ── */
+  .cta-section { text-align: center; padding: 6rem 0; }
+  .cta-section h2 { max-width: 520px; margin: .5rem auto 1.25rem; }
+  .cta-section .sub { margin: 0 auto 2.5rem; text-align: center; }
+  .btn-large { display: inline-flex; align-items: center; gap: .5rem; font-size: 1rem; font-weight: 500; padding: 1rem 2.25rem; background: var(--ink); color: var(--paper); border-radius: var(--r); text-decoration: none; transition: transform .15s, opacity .2s; }
+  .btn-large:hover { transform: translateY(-1px); opacity: .9; }
+  .btn-outline { display: inline-flex; align-items: center; gap: .5rem; font-size: .9rem; padding: .9rem 1.75rem; border: 1.5px solid var(--paper-3); border-radius: var(--r); text-decoration: none; color: var(--ink); transition: border-color .2s; }
+  .btn-outline:hover { border-color: var(--ink); }
+  .cta-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+  /* ── FOOTER ── */
+  footer { border-top: 1px solid var(--paper-2); padding: 1.75rem 2.5rem; display: flex; align-items: center; justify-content: space-between; max-width: var(--max); margin: 0 auto; }
+  .footer-logo { font-family: var(--serif); font-size: 1rem; }
+  .footer-note { font-size: .72rem; color: var(--muted); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding-top: 5rem; gap: 2.5rem; }
+    .hero-visual { order: -1; }
+    .phone-scene { width: 280px; }
+    .phone { width: 220px; }
+    .badge-float, .badge-float-2 { display: none; }
+    .steps-grid { grid-template-columns: 1fr 1fr; }
+    .step-card::after { display: none; }
+    .feat-grid { grid-template-columns: 1fr; }
+    .pricing-cards { grid-template-columns: 1fr; max-width: 100%; }
+    .proof-grid { grid-template-columns: 1fr; }
+    .wrap { padding: 0 1.25rem; }
+    section { padding: 3.5rem 0; }
+    footer { flex-direction: column; gap: .5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <span class="logo-mark">✂</span>
+    Mane
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#signup" class="btn-nav">Get early access →</a></li>
+  </ul>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section>
+  <div class="wrap">
+    <div class="hero">
+
+      <div>
+        <div class="hero-badge">Now in early access</div>
+        <h1>Your regulars.<br><em>Recurring</em> every month.</h1>
+        <p class="hero-sub">Mane gives barbers a dead-simple subscription layer. Your customers sign up by direct debit, scan a QR code when they walk in, and you get paid automatically — every month.</p>
+        <div class="cta-row">
+          <a href="#signup" class="btn-primary">Get early access — it's free →</a>
+          <a href="#how" class="btn-ghost">See how it works ↓</a>
+        </div>
+        <div class="hero-proof">Free to use. We only earn when you get paid.</div>
+      </div>
+
+      <!-- PHONE MOCKUP -->
+      <div class="hero-visual">
+        <div class="phone-scene">
+
+          <!-- Floating badges -->
+          <div class="badge-float">
+            <div class="badge-float-label">This month's MRR</div>
+            <div class="badge-float-val">£1,080</div>
+            <div class="badge-float-sub">36 active members</div>
+          </div>
+
+          <div class="badge-float-2">
+            <div class="badge-float-label">Today's check-ins</div>
+            <div class="badge-float-val">8</div>
+            <div class="badge-float-sub">3 still to visit</div>
+          </div>
+
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+
+              <div class="screen-header">
+                <div class="screen-logo">
+                  <div class="screen-logo-dot"></div>
+                  Mane
+                </div>
+                <div class="screen-date">Mon 2 Jun · 11:24</div>
+              </div>
+
+              <div class="screen-body">
+                <div class="screen-greeting">Good morning,</div>
+                <div class="screen-shop">Harbour Lane Barbers</div>
+
+                <div class="screen-stats">
+                  <div class="screen-stat">
+                    <div class="screen-stat-label">Members</div>
+                    <div class="screen-stat-val">36</div>
+                    <div class="screen-stat-delta">+4 this month</div>
+                  </div>
+                  <div class="screen-stat">
+                    <div class="screen-stat-label">MRR</div>
+                    <div class="screen-stat-val">£1,080</div>
+                    <div class="screen-stat-delta">↑ from £840</div>
+                  </div>
+                </div>
+
+                <div class="screen-section-label">Today's QR check-ins</div>
+                <div class="screen-checkins">
+                  <div class="screen-checkin">
+                    <div class="screen-av av-a">JH</div>
+                    <div class="screen-checkin-name">Jamie Harris</div>
+                    <div class="screen-checkin-time">09:12</div>
+                    <div class="screen-tick">✓</div>
+                  </div>
+                  <div class="screen-checkin">
+                    <div class="screen-av av-b">MK</div>
+                    <div class="screen-checkin-name">Marcus King</div>
+                    <div class="screen-checkin-time">10:45</div>
+                    <div class="screen-tick">✓</div>
+                  </div>
+                  <div class="screen-checkin">
+                    <div class="screen-av av-c">SR</div>
+                    <div class="screen-checkin-name">Sam Rossi</div>
+                    <div class="screen-checkin-time">11:02</div>
+                    <div class="screen-tick">✓</div>
+                  </div>
+                </div>
+
+                <div class="screen-mrr-bar">
+                  <div class="screen-mrr-row">
+                    <div class="screen-mrr-label">Progress to £1,500</div>
+                    <div class="screen-mrr-val">67%</div>
+                  </div>
+                  <div class="screen-bar-bg">
+                    <div class="screen-bar-fill"></div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ══ HOW IT WORKS ══ -->
+<div class="how-section" id="how">
+  <div class="wrap">
+    <div class="eyebrow">How it works</div>
+    <h2>Set up in minutes.<br>Paid every <em>month</em>.</h2>
+    <p class="sub">Four steps from zero to a predictable monthly income. No booking system, no complicated setup.</p>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-icon">✂️</div>
+        <div class="step-title">Create your plan</div>
+        <div class="step-desc">Set a monthly price and member discount in two minutes. We generate a signup link and a printable QR code.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-icon">📲</div>
+        <div class="step-title">Customers sign up</div>
+        <div class="step-desc">They click your link or scan the QR, enter their details and authorise a direct debit. Takes under 90 seconds.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-icon">🔲</div>
+        <div class="step-title">Walk-in QR check-in</div>
+        <div class="step-desc">When they arrive, they scan your shop QR. Verified instantly. No booking needed. You see it live on your dashboard.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-icon">💷</div>
+        <div class="step-title">Get paid automatically</div>
+        <div class="step-desc">Direct debits collect on the same date every month. Funds land in your bank within 3–5 working days.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FEATURES ══ -->
+<section id="features">
+  <div class="wrap">
+    <div class="eyebrow">Built for barbers</div>
+    <h2>Everything you need.<br><em>Nothing you don't.</em></h2>
+    <p class="sub">Designed specifically for walk-in barber shops. No bloat, no booking system required.</p>
+
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="feat-icon">🔲</div>
+        <div class="feat-title">QR walk-in check-in</div>
+        <div class="feat-desc">One QR code on your counter. Members scan it when they walk in. You see it instantly in your dashboard — no awkward conversation at the till.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🏦</div>
+        <div class="feat-title">Direct debit billing</div>
+        <div class="feat-desc">Payments collected automatically every month via GoCardless. No chasing cash, no failed card payments, no admin. It just works.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🔗</div>
+        <div class="feat-title">Shareable signup link</div>
+        <div class="feat-desc">Share on Instagram, WhatsApp, or print a QR for your window. Customers self-onboard in under 2 minutes. No paper forms.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📊</div>
+        <div class="feat-title">Live MRR dashboard</div>
+        <div class="feat-desc">See your monthly recurring revenue in real time. Track members, visit frequency, and your predicted income for next month.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🎁</div>
+        <div class="feat-title">Member discounts</div>
+        <div class="feat-desc">Set whatever discount keeps your regulars loyal. Subscribers feel valued, you get predictable income. Everyone wins.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">❌</div>
+        <div class="feat-title">Honest cancellation</div>
+        <div class="feat-desc">Members cancel in one click. You're notified instantly. Easy cancellation builds trust — and loyal members don't cancel anyway.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📱</div>
+        <div class="feat-title">Mobile-first</div>
+        <div class="feat-desc">Check your MRR, see today's walk-ins, and verify a member — all from your phone between cuts. No laptop required.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🔒</div>
+        <div class="feat-title">Bank-grade security</div>
+        <div class="feat-desc">Powered by GoCardless. We never store bank details. PCI-compliant by design. Your customers' data is safe.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📍</div>
+        <div class="feat-title">Visit tracking</div>
+        <div class="feat-desc">See exactly who visited and when. Spot members who haven't been in a while — a perfect nudge to re-engage them.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ══ PRICING ══ -->
+<div class="pricing-section" id="pricing">
+  <div class="wrap">
+    <div class="eyebrow">Pricing</div>
+    <h2>Free to use.<br>We earn when <em>you</em> earn.</h2>
+    <p class="sub">No monthly fee, no setup cost, no contracts. We charge a flat fee on each successful payment — nothing else.</p>
+    <div class="pricing-note">✓ No monthly fee &nbsp;·&nbsp; ✓ No setup cost &nbsp;·&nbsp; ✓ Cancel any time</div>
+
+    <div class="pricing-cards">
+      <div class="pricing-card">
+        <div class="pricing-card-label">Standard</div>
+        <div class="pricing-amount">£1.00</div>
+        <div class="pricing-per">per successful transaction</div>
+        <div class="pricing-desc">One flat fee, no surprises. Easy to factor in when you set your subscription price.</div>
+        <div class="pricing-example">
+          30 members × £30/month<br>
+          <strong>You keep ~£863/month after all fees</strong>
+        </div>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-card-label">How the maths works</div>
+        <div class="pricing-amount" style="font-size:1.3rem; margin-top:.25rem;">GoCardless 1% + 20p<br>+ Mane £1.00 flat</div>
+        <div class="pricing-per">total deducted per payment</div>
+        <div class="pricing-desc">On a £30 subscription: GoCardless takes 50p, Mane takes £1.00. You keep £28.50. That's it — no hidden charges.</div>
+        <div class="pricing-example">
+          50 members × £30/month<br>
+          <strong>You keep ~£1,425/month after all fees</strong>
+        </div>
+      </div>
+    </div>
+
+    <p class="pricing-footnote">All figures include GoCardless processing fees (1% + 20p per transaction, capped at £4). No VAT charged on Mane's platform fee during early access.</p>
+  </div>
+</div>
+
+<!-- ══ SOCIAL PROOF ══ -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Early feedback</div>
+    <h2>Barbers are <em>already talking</em></h2>
+
+    <div class="proof-grid">
+      <div class="proof-card">
+        <div class="proof-stars">★★★★★</div>
+        <div class="proof-quote">I've been cutting the same guys for years but had no idea what next month looked like. This genuinely changes everything.</div>
+        <div class="proof-person">
+          <div class="proof-av" style="background:var(--teal-lt);color:var(--teal)">DL</div>
+          <div>
+            <div class="proof-name">Dara Lewis</div>
+            <div class="proof-role">Owner, The Clean Cut — Manchester</div>
+          </div>
+        </div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-stars">★★★★★</div>
+        <div class="proof-quote">The QR check-in is genius for walk-ins. No booking, no hassle. They scan, I see it on my phone, done. Wish I had this years ago.</div>
+        <div class="proof-person">
+          <div class="proof-av" style="background:var(--gold-lt);color:var(--gold)">TM</div>
+          <div>
+            <div class="proof-name">Theo Mensah</div>
+            <div class="proof-role">Solo barber — Birmingham</div>
+          </div>
+        </div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-stars">★★★★★</div>
+        <div class="proof-quote">Set up my plan on a Tuesday, had my first five subscribers by the weekend. The signup link through WhatsApp was all it took.</div>
+        <div class="proof-person">
+          <div class="proof-av" style="background:#e8e2f5;color:#6b4ec8">RA</div>
+          <div>
+            <div class="proof-name">Ricky Ashton</div>
+            <div class="proof-role">Fade & Fresh Barbershop — Leeds</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ══ CTA ══ -->
+<div class="cta-section" id="signup">
+  <div class="wrap">
+    <div class="eyebrow">Get started</div>
+    <h2>Your regulars deserve a <em>membership</em></h2>
+    <p class="sub">Join the early access list. Free to use, takes 10 minutes to set up your first plan, and your first subscribers can be live today.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn-large">Get early access — it's free →</a>
+      <a href="#" class="btn-outline">Book a 15-min demo</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">✂ Mane</div>
+  <div class="footer-note">© 2026 Mane Ltd · Payments powered by GoCardless · Built in the UK 🇬🇧</div>
+</footer>
+
+</body>
+</html>
