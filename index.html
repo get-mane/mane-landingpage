@@ -175,6 +175,63 @@
   .screen-bar-fill { height: 100%; background: linear-gradient(90deg, var(--teal), #4db89e); border-radius: 3px; animation: grow 2s ease-out forwards; }
   @keyframes grow { from { width: 0; } to { width: 67%; } }
 
+  .screen-graph {
+    background: #fff;
+    border-radius: 8px;
+    padding: 8px 10px;
+    border: 1px solid var(--paper-2);
+    margin-top: 8px;
+  }
+  .screen-graph-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .screen-graph-tabs {
+    display: flex;
+    gap: 4px;
+  }
+  .screen-graph-tab {
+    font-size: .5rem;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: none;
+    background: var(--paper-2);
+    color: var(--muted);
+    cursor: pointer;
+    font-family: var(--sans);
+    transition: all .15s;
+  }
+  .screen-graph-tab.active {
+    background: var(--ink);
+    color: #fff;
+  }
+  .screen-graph-val {
+    font-size: .55rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+  .screen-chart-wrap {
+    width: 100%;
+    height: 80px;
+  }
+  .screen-chart-wrap canvas {
+    width: 100% !important;
+    height: 80px !important;
+  }
+  .screen-graph-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3px;
+  }
+  .screen-graph-labels span {
+    font-size: .48rem;
+    color: var(--muted);
+  }
+
+
   /* Floating badge */
   .badge-float {
     position: absolute;
@@ -329,6 +386,197 @@
     display: block;
   }
 
+
+
+  .plan-tab {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    padding: .75rem 1.1rem;
+    background: var(--paper);
+    border: 1.5px solid var(--paper-3);
+    border-radius: var(--r);
+    cursor: pointer;
+    text-align: left;
+    transition: all .2s;
+    font-family: var(--sans);
+    color: var(--ink);
+  }
+  .plan-tab:hover { border-color: var(--gold); }
+  .plan-tab.active { border-color: var(--gold); background: var(--gold-lt); }
+
+  /* ── CALCULATOR ── */
+  .calc-section { background: var(--paper-2); padding: 5.5rem 0; }
+  .calc-section .eyebrow { color: var(--gold); }
+
+  .calc-box {
+    background: #fff;
+    border: 1px solid var(--paper-3);
+    border-radius: 14px;
+    padding: 2.5rem;
+    margin-top: 3rem;
+    max-width: 700px;
+  }
+
+  .calc-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .calc-field label {
+    display: block;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: .6rem;
+  }
+
+  .calc-field-inner {
+    display: flex;
+    align-items: center;
+    background: var(--paper);
+    border: 1.5px solid var(--paper-3);
+    border-radius: var(--r);
+    overflow: hidden;
+    transition: border-color .2s;
+  }
+
+  .calc-field-inner:focus-within { border-color: var(--gold); }
+
+  .calc-prefix {
+    padding: .75rem 1rem;
+    font-size: .95rem;
+    font-weight: 500;
+    color: var(--muted);
+    background: var(--paper-2);
+    border-right: 1.5px solid var(--paper-3);
+    user-select: none;
+  }
+
+  .calc-field-inner input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: .75rem 1rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-family: var(--sans);
+    color: var(--ink);
+    outline: none;
+    width: 100%;
+  }
+
+  .calc-slider-row {
+    margin-top: .6rem;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+  }
+
+  .calc-slider-row input[type=range] {
+    flex: 1;
+    -webkit-appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--paper-3);
+    outline: none;
+  }
+
+  .calc-slider-row input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--gold);
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,.15);
+  }
+
+  .calc-slider-min, .calc-slider-max {
+    font-size: .7rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .calc-results {
+    background: var(--ink);
+    border-radius: 10px;
+    padding: 1.75rem 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: linear-gradient(135deg, #1a1917 0%, #0f0e0d 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .calc-results::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(201,146,42,.12), transparent 70%);
+    pointer-events: none;
+  }
+
+  .calc-result-item {
+    padding: 1.25rem 1.5rem;
+    border-right: 1px solid rgba(255,255,255,.08);
+  }
+
+  .calc-result-item:last-child { border-right: none; }
+
+  .calc-result-label {
+    font-size: .62rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.4);
+    margin-bottom: .4rem;
+  }
+
+  .calc-result-value {
+    font-family: var(--serif);
+    font-size: 1.8rem;
+    line-height: 1;
+    color: #fff;
+    transition: all .3s ease;
+  }
+
+  .calc-result-value.gold { color: var(--gold); }
+
+  .calc-result-sub {
+    font-size: .7rem;
+    color: rgba(255,255,255,.35);
+    margin-top: .3rem;
+  }
+
+  .calc-note {
+    font-size: .75rem;
+    color: var(--muted);
+    margin-top: 1.25rem;
+    line-height: 1.6;
+  }
+
+  .calc-cta {
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 900px) {
+    .calc-inputs { grid-template-columns: 1fr; }
+    .calc-results { grid-template-columns: 1fr; }
+    .calc-result-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .calc-result-item:last-child { border-bottom: none; }
+  }
+
   @media (max-width: 900px) {
     nav { padding: 1rem 1.25rem; }
     .nav-links { display: none; }
@@ -455,6 +703,22 @@
                   </div>
                   <div class="screen-bar-bg">
                     <div class="screen-bar-fill"></div>
+                  </div>
+                </div>
+
+                <div class="screen-graph">
+                  <div class="screen-graph-header">
+                    <div class="screen-graph-tabs">
+                      <button class="screen-graph-tab active" onclick="switchGraph('subs',this)">Subscribers</button>
+                      <button class="screen-graph-tab" onclick="switchGraph('mrr',this)">MRR</button>
+                    </div>
+                    <div class="screen-graph-val" id="graph-headline">+8 this month</div>
+                  </div>
+                  <div class="screen-chart-wrap">
+                    <canvas id="phone-chart" width="220" height="80"></canvas>
+                  </div>
+                  <div class="screen-graph-labels">
+                    <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
                   </div>
                 </div>
 
@@ -701,6 +965,190 @@
 
 <hr class="div">
 
+
+<!-- ══ CALCULATOR ══ -->
+<div class="calc-section" id="calculator">
+  <div class="wrap">
+    <div class="eyebrow">Revenue calculator</div>
+    <h2>See what Mane could mean<br>for <em>your</em> income</h2>
+    <p class="sub">Adjust the sliders to match your shop. See your potential guaranteed monthly income before a single walk-in comes through the door.</p>
+
+    <div class="calc-box">
+
+      <!-- Plan type selector -->
+      <div style="margin-bottom:1.75rem;">
+        <div style="font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;">Choose your membership model</div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;" id="plan-tabs">
+          <button class="plan-tab active" onclick="setPlan('one')" id="tab-one">
+            <span style="font-size:1rem;">✂</span>
+            <div>
+              <div style="font-weight:700;font-size:.85rem;">1 cut per month</div>
+              <div style="font-size:.72rem;opacity:.7;">Simple &amp; predictable</div>
+            </div>
+          </button>
+          <button class="plan-tab" onclick="setPlan('unlimited')" id="tab-unlimited">
+            <span style="font-size:1rem;">∞</span>
+            <div>
+              <div style="font-weight:700;font-size:.85rem;">Unlimited cuts</div>
+              <div style="font-size:.72rem;opacity:.7;">Maximum customer appeal</div>
+            </div>
+          </button>
+          <button class="plan-tab" onclick="setPlan('hybrid')" id="tab-hybrid">
+            <span style="font-size:1rem;">⭐</span>
+            <div>
+              <div style="font-weight:700;font-size:.85rem;">2 cuts + discount</div>
+              <div style="font-size:.72rem;opacity:.7;">Recommended</div>
+            </div>
+          </button>
+        </div>
+
+        <!-- Plan description -->
+        <div id="plan-desc" style="margin-top:.9rem;padding:.8rem 1rem;background:var(--paper);border-radius:var(--r);border-left:3px solid var(--gold);font-size:.82rem;color:var(--muted);line-height:1.6;">
+          <strong style="color:var(--ink);">1 cut per month included.</strong> Members get one discounted haircut per month. Additional cuts charged at your normal rate. Low risk, easy to explain.
+        </div>
+      </div>
+
+      <div class="calc-inputs">
+        <div class="calc-field">
+          <label>Regular customers</label>
+          <div class="calc-field-inner">
+            <span class="calc-prefix">👤</span>
+            <input type="number" id="calc-members" value="20" min="1" max="200" oninput="syncSlider('members');calcUpdate()">
+          </div>
+          <div class="calc-slider-row">
+            <span class="calc-slider-min">5</span>
+            <input type="range" id="slider-members" min="5" max="150" value="20" oninput="syncInput('members');calcUpdate()">
+            <span class="calc-slider-max">150</span>
+          </div>
+        </div>
+
+        <div class="calc-field">
+          <label>Monthly subscription price</label>
+          <div class="calc-field-inner">
+            <span class="calc-prefix">£</span>
+            <input type="number" id="calc-price" value="25" min="10" max="80" oninput="syncSlider('price');calcUpdate()">
+          </div>
+          <div class="calc-slider-row">
+            <span class="calc-slider-min">£10</span>
+            <input type="range" id="slider-price" min="10" max="80" value="25" oninput="syncInput('price');calcUpdate()">
+            <span class="calc-slider-max">£80</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Extra cut price for hybrid -->
+      <div id="hybrid-row" style="display:none;margin-bottom:1.5rem;">
+        <div class="calc-field" style="max-width:280px;">
+          <label>Member discount cut price (£)</label>
+          <div class="calc-field-inner">
+            <span class="calc-prefix">£</span>
+            <input type="number" id="calc-extraprice" value="12" min="5" max="40" oninput="calcUpdate()">
+          </div>
+        </div>
+      </div>
+
+      <div class="calc-results">
+        <div class="calc-result-item">
+          <div class="calc-result-label">Guaranteed MRR</div>
+          <div class="calc-result-value gold" id="res-mrr">£480</div>
+          <div class="calc-result-sub" id="res-mrr-sub">from subscriptions alone</div>
+        </div>
+        <div class="calc-result-item">
+          <div class="calc-result-label">Annual recurring revenue</div>
+          <div class="calc-result-value" id="res-arr">£5,760</div>
+          <div class="calc-result-sub">before walk-in takings</div>
+        </div>
+        <div class="calc-result-item">
+          <div class="calc-result-label">Mane fee (total/mo)</div>
+          <div class="calc-result-value" id="res-fee">£20</div>
+          <div class="calc-result-sub">£1 per transaction</div>
+        </div>
+      </div>
+
+      <!-- Plan insight -->
+      <div id="plan-insight" style="margin-top:1.1rem;padding:.9rem 1.1rem;background:var(--teal-lt);border-radius:var(--r);font-size:.82rem;color:#0e3d31;line-height:1.65;"></div>
+
+      <p class="calc-note" style="margin-top:1rem;">Net figures after Mane's £1.00 flat fee and GoCardless processing costs (1% + 20p per payment). Actual net is typically 94–96% of gross.</p>
+
+      <div class="calc-cta">
+        <a href="#" class="btn-primary" onclick="event.preventDefault();openModal('modal-access')">Get started free →</a>
+        <span style="font-size:.82rem;color:var(--muted);">No monthly fee. Free to set up.</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+var currentPlan = 'one';
+
+var planDescriptions = {
+  one: '<strong style="color:var(--ink);">1 cut per month included.</strong> Members get one discounted haircut per month. Additional cuts charged at your normal rate. Low risk, easy to explain.',
+  unlimited: '<strong style="color:var(--ink);">Unlimited cuts included.</strong> Members can come in as often as they like for one flat monthly price. Maximum appeal to regular customers — most won\'t visit as often as they think.',
+  hybrid: '<strong style="color:var(--ink);">2 cuts included + member discount on extras.</strong> The recommended model. Guarantees two cuts per month, protects against heavy users, and still rewards loyalty with a discounted rate on additional visits.'
+};
+
+function setPlan(plan) {
+  currentPlan = plan;
+  document.querySelectorAll('.plan-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + plan).classList.add('active');
+  document.getElementById('plan-desc').innerHTML = planDescriptions[plan];
+  document.getElementById('hybrid-row').style.display = plan === 'hybrid' ? 'block' : 'none';
+
+  // Adjust suggested price per plan
+  var prices = { one: 25, unlimited: 40, hybrid: 35 };
+  document.getElementById('calc-price').value = prices[plan];
+  document.getElementById('slider-price').value = prices[plan];
+
+  calcUpdate();
+}
+
+function syncSlider(field) {
+  document.getElementById('slider-' + field).value = document.getElementById('calc-' + field).value;
+}
+function syncInput(field) {
+  document.getElementById('calc-' + field).value = document.getElementById('slider-' + field).value;
+}
+
+function calcUpdate() {
+  var members    = parseInt(document.getElementById('calc-members').value)   || 0;
+  var price      = parseFloat(document.getElementById('calc-price').value)   || 0;
+  var extraPrice = parseFloat(document.getElementById('calc-extraprice') ? document.getElementById('calc-extraprice').value : 12) || 12;
+
+  var gcFee    = Math.min(price * 0.01 + 0.20, 4.00);
+  var maneFee  = 1.00;
+  var netSub   = price - gcFee - maneFee;
+
+  var mrr = members * netSub;
+  var arr = mrr * 12;
+  var fee = members * maneFee;
+
+  var insight = '';
+
+  if (currentPlan === 'one') {
+    insight = '📊 <strong>' + members + ' members × £' + price + '/month</strong> = £' + Math.round(members * price).toLocaleString() + ' gross. That\'s £' + Math.round(mrr).toLocaleString() + ' guaranteed income every month before a single walk-in comes through the door.';
+  } else if (currentPlan === 'unlimited') {
+    var avgVisits = 2.2;
+    var effectivePerVisit = (netSub / avgVisits).toFixed(2);
+    insight = '📊 Most subscribers visit an average of 2–3 times per month in practice. At ' + members + ' members your guaranteed MRR is <strong>£' + Math.round(mrr).toLocaleString() + '</strong>. Effective rate per cut: ~£' + effectivePerVisit + ' — comparable to your walk-in rate with zero no-show risk.';
+  } else {
+    var avgExtra = 0.8;
+    var extraRevenue = members * avgExtra * extraPrice;
+    var totalMonthly = mrr + extraRevenue;
+    insight = '📊 <strong>Recommended model.</strong> £' + Math.round(mrr).toLocaleString() + '/month guaranteed from subscriptions, plus ~£' + Math.round(extraRevenue).toLocaleString() + ' from member discount cuts (est. 0.8 extra visits/member/month). Total estimated monthly income: <strong>£' + Math.round(totalMonthly).toLocaleString() + '</strong>.';
+  }
+
+  document.getElementById('res-mrr').textContent = '£' + Math.round(mrr).toLocaleString();
+  document.getElementById('res-arr').textContent = '£' + Math.round(arr).toLocaleString();
+  document.getElementById('res-fee').textContent = '£' + Math.round(fee).toLocaleString();
+  document.getElementById('plan-insight').innerHTML = insight;
+}
+
+calcUpdate();
+</script>
+
+<hr class="div">
+
 <!-- ══ CTA ══ -->
 <div class="cta-section" id="signup">
   <div class="wrap">
@@ -755,6 +1203,115 @@ document.addEventListener('keydown', function(e) {
     });
   }
 });
+</script>
+
+
+<script>
+// Phone mockup mini chart
+var chartData = {
+  subs: {
+    values: [8, 12, 17, 22, 29, 36],
+    color: '#1d6b5a',
+    fillColor: 'rgba(29,107,90,0.12)',
+    headline: '+8 this month'
+  },
+  mrr: {
+    values: [200, 300, 425, 550, 720, 1080],
+    color: '#c9922a',
+    fillColor: 'rgba(201,146,42,0.12)',
+    headline: '+£360 this month'
+  }
+};
+
+var currentGraph = 'subs';
+var phoneChart = null;
+
+function drawPhoneChart(type) {
+  var canvas = document.getElementById('phone-chart');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var data = chartData[type];
+  var vals = data.values;
+
+  var w = canvas.offsetWidth || 220;
+  var h = 80;
+  canvas.width = w;
+  canvas.height = h;
+
+  var pad = 8;
+  var chartW = w - pad * 2;
+  var chartH = h - pad * 2;
+  var max = Math.max.apply(null, vals) * 1.1;
+  var min = 0;
+  var range = max - min;
+  var step = chartW / (vals.length - 1);
+
+  var points = vals.map(function(v, i) {
+    return {
+      x: pad + i * step,
+      y: pad + chartH - ((v - min) / range) * chartH
+    };
+  });
+
+  ctx.clearRect(0, 0, w, h);
+
+  // Fill area
+  var grad = ctx.createLinearGradient(0, 0, 0, h);
+  grad.addColorStop(0, data.color.replace(')', ', 0.2)').replace('rgb', 'rgba'));
+  grad.addColorStop(1, data.color.replace(')', ', 0)').replace('rgb', 'rgba'));
+
+  ctx.beginPath();
+  ctx.moveTo(points[0].x, h);
+  ctx.lineTo(points[0].x, points[0].y);
+  for (var i = 1; i < points.length; i++) {
+    var cp1x = points[i-1].x + step * 0.4;
+    var cp1y = points[i-1].y;
+    var cp2x = points[i].x - step * 0.4;
+    var cp2y = points[i].y;
+    ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, points[i].x, points[i].y);
+  }
+  ctx.lineTo(points[points.length-1].x, h);
+  ctx.closePath();
+  ctx.fillStyle = data.fillColor;
+  ctx.fill();
+
+  // Line
+  ctx.beginPath();
+  ctx.moveTo(points[0].x, points[0].y);
+  for (var i = 1; i < points.length; i++) {
+    var cp1x = points[i-1].x + step * 0.4;
+    var cp1y = points[i-1].y;
+    var cp2x = points[i].x - step * 0.4;
+    var cp2y = points[i].y;
+    ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, points[i].x, points[i].y);
+  }
+  ctx.strokeStyle = data.color;
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  // Last point dot
+  var last = points[points.length - 1];
+  ctx.beginPath();
+  ctx.arc(last.x, last.y, 3, 0, Math.PI * 2);
+  ctx.fillStyle = data.color;
+  ctx.fill();
+  ctx.strokeStyle = '#fff';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+}
+
+function switchGraph(type, btn) {
+  currentGraph = type;
+  document.querySelectorAll('.screen-graph-tab').forEach(t => t.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  document.getElementById('graph-headline').textContent = chartData[type].headline;
+  document.getElementById('graph-headline').style.color = type === 'mrr' ? 'var(--gold)' : 'var(--teal)';
+  drawPhoneChart(type);
+}
+
+// Draw on load and resize
+window.addEventListener('load', function() { drawPhoneChart('subs'); });
+window.addEventListener('resize', function() { drawPhoneChart(currentGraph); });
 </script>
 
 </body>
