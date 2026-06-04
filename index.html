@@ -1186,20 +1186,39 @@ calcUpdate();
 
 <script>
 function openModal(id) {
-  document.getElementById(id).classList.add('open');
+  var modal = document.getElementById(id);
+  modal.classList.add('open');
   document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
 }
+
+function closeModalById(id) {
+  var modal = document.getElementById(id);
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+  document.documentElement.style.overflow = '';
+}
+
 function closeModal(e, id) {
   if (e.target === document.getElementById(id)) {
-    document.getElementById(id).classList.remove('open');
-    document.body.style.overflow = '';
+    closeModalById(id);
   }
 }
+
+// Close buttons on the modal itself
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.modal-close').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var modal = btn.closest('.modal-overlay');
+      if (modal) closeModalById(modal.id);
+    });
+  });
+});
+
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-    document.querySelectorAll('.modal-overlay.open').forEach(m => {
-      m.classList.remove('open');
-      document.body.style.overflow = '';
+    document.querySelectorAll('.modal-overlay.open').forEach(function(m) {
+      closeModalById(m.id);
     });
   }
 });
